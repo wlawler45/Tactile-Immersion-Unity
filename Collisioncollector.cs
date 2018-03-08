@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//class used to gather data from the different touch points on each fingertip, assign values to them and write them into an array
+//class used to gather data from the different touch points on each fingertip, assign values to them and write them into an array, this class is attached to every fingertip prefab
 public class Collisioncollector : MonoBehaviour {
 	public GameObject ArduinoController;//=GetComponent<Compileandsend>();
 	
@@ -14,6 +14,7 @@ public class Collisioncollector : MonoBehaviour {
 		//LATER ADD EXCEPTION CATCHER FOR IF THIS RETURNS NULL TO HELP PEOPLE WITH INITIALIZATION
 		outputter=ArduinoController.GetComponent<Compileandsend>();
 		IDoffset = 0;
+		//name is set in the scene after the prefab is instantiated
 		if (gameObject.name.Contains ("Index")) {  
 			IDoffset=5; //each finger has 5 actuators except for ring and pinky finger which have 3
 		}
