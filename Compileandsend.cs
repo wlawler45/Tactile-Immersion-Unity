@@ -7,7 +7,7 @@ using System.IO.Ports;
 using System.Threading;
 
 
-//This class collects all collision data and stores in array of values.
+//This class collects all collision data and stores in array of values. And is attached to only one object in the scene
 public class Compileandsend : MonoBehaviour { 
 	/// T
 	/// </summary>
@@ -32,13 +32,7 @@ public class Compileandsend : MonoBehaviour {
 		StartCoroutine (aftercollection ());
 	}
 
-	// Update is called once per frame
-	//void final(){
-	//	yield return new WaitForFixedUpdate();
-	//	Debug.Log ("Waitforfixedupdate finished and continued");
-
-
-	//}
+	
 	
 	IEnumerator aftercollection(){
 		//Idea for future: most of the time collisions are not happening, instead of always sending an array only send when new data
