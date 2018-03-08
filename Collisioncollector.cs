@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//class used to gather data from the different touch points on each fingertip, assign values to them and write them into an array
 public class Collisioncollector : MonoBehaviour {
 	public GameObject ArduinoController;//=GetComponent<Compileandsend>();
-	//    Use this for initialization
+	
 	public Compileandsend outputter;
 	private int IDoffset;  //IDoffset allows this code to determine which finger it is on and adapt the ID number of the actuator
+	//    Use this for initialization
 	void Start(){ 
 		ArduinoController = GameObject.FindWithTag ("SerialSender");
 		//LATER ADD EXCEPTION CATCHER FOR IF THIS RETURNS NULL TO HELP PEOPLE WITH INITIALIZATION
 		outputter=ArduinoController.GetComponent<Compileandsend>();
 		IDoffset = 0;
 		if (gameObject.name.Contains ("Index")) {  
-			IDoffset=5;
+			IDoffset=5; //each finger has 5 actuators except for ring and pinky finger which have 3
 		}
 		if (gameObject.name.Contains ("Middle")) {
 			IDoffset=10;
@@ -33,7 +35,7 @@ public class Collisioncollector : MonoBehaviour {
 		int x=ID+IDoffset; //Full actuator ID determination
 
 
-		outputter.editOut (x, value);
+		outputter.editOut (x, value); //writes value to overall array
 		//Debug.Log (value);
 	}
 }
