@@ -6,13 +6,15 @@ using System.IO;
 using System.IO.Ports;
 using System.Threading;
 
-public class Compileandsend : MonoBehaviour { //This class collects all collision data and stores in array of values.
+
+//This class collects all collision data and stores in array of values.
+public class Compileandsend : MonoBehaviour { 
 	/// T
 	/// </summary>
 
-
 	public int[] outvals;
 	SerialPort stream;
+	
 	// Use this for initialization
 	void Start () {
 		string portName = "COM8"; //Change the port name to match the one you specifically are using (a function that handles this could be convenient...)
@@ -26,7 +28,7 @@ public class Compileandsend : MonoBehaviour { //This class collects all collisio
 		catch(System.IO.IOException){
 			//silently catch the error
 		}
-
+		//thread declaration and start
 		StartCoroutine (aftercollection ());
 	}
 
@@ -37,14 +39,15 @@ public class Compileandsend : MonoBehaviour { //This class collects all collisio
 
 
 	//}
+	
 	IEnumerator aftercollection(){
 		//Idea for future: most of the time collisions are not happening, instead of always sending an array only send when new data
 		while(true){
-			yield return new WaitForFixedUpdate(); //We assume this line makes outvals stable until this line is reached again
+			yield return new WaitForFixedUpdate(); //Allows all values in outvals to be updated by the physics engine before beginning the sending protocol
 			//Convert int array to byte array
 			int Asize = outvals.Length*2+2; //extra 2-byte space is for termination byte
 			if(Asize>2){
-				//the garabage collector deals with with deleting bytearray. It becomes out of scope is when the loop restarts
+				//the garabage collector deals with deleting bytearray. It becomes out of scope is when the loop restarts
 				var bytearray= new byte[Asize];
 				//Attach start int (40,95) to the array
 				bytearray[0] = 19;//(byte) (4095 >> 8);
@@ -68,23 +71,11 @@ public class Compileandsend : MonoBehaviour { //This class collects all collisio
 				for(int i = 0; i<outvals.Length; i++){
 					outvals[i]=0;
 				}
-				//End sending byte array
-
-				//save to byte array textfile (may have to change to deal with encodings)
-				//Use this website to compare file with Microcontroller's save afterwards: https://www.diffnow.com/
-				//WriteArrayToFile(bytearray,0,bytearray.Length-1);
-
-				//print byte array to console. Printing is slow so give a small random chance to print
-				/*
-				if(Random.Range(0,100) == 1){
-					for(int i =0; i<bytearray.Length;i++){
-						print (bytearray [i]);
-					}
-				}
-				*/
+				
 			}
 		}
 	}
+	
 	//takes a char array and writes the bytes to a text file
 	static void WriteArrayToFile(byte[] buffer, int index, int count){
 		string path = "Assets/Resources/SerialTest.txt"; //the path could be a parameter
@@ -92,6 +83,7 @@ public class Compileandsend : MonoBehaviour { //This class collects all collisio
 		writer.BaseStream.Write(buffer,index,count);
 		writer.Close();
 	}
+	
 	public void editOut(int index, int val){
 		outvals [index] = val; //hashes the value to its respective index
 	}
