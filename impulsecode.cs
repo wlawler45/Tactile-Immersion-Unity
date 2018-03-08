@@ -11,7 +11,7 @@ public class impulsecode : MonoBehaviour {
 	
 	public int count = 0;
 	public int average = 0;
-	public int mass;
+	public int mass; //undefined variables are given values in the Unity scene or by prefab units brought into the scene, purposefully left undefined here
 	public int ID;
 	public Color onColor = new Color (1, (float)0.92, (float) 0.016, 1);
 	public Color offColor = new Color (0,0,0,1);
